@@ -8,43 +8,50 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"./apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint": "eslint \"{src,./apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/sist/test/jest-e2e.json",
+    "sist_typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -f ./apps/sist/src/dataSource.ts",
+    "sist_migration:generate": "npm run sist_typeorm:cli -- migration:generate -d ./apps/sist/src/database/migrations -n",
+    "sist_migration:create": "npm run sist_typeorm:cli -- migration:create -d ./apps/sist/src/database/migrations -n",
+    "sist_migration:run": "npm run sist_typeorm:cli -- migration:run",
+    "sist_migration:revert": "npm run sist_typeorm:cli -- migration:revert",
+    "sist_seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config -n ./apps/sist/src/dataSource.ts",
+    "sist_seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed -n ./apps/sist/src/dataSource.ts",
+    "sist_db:refresh": "npm run sist_typeorm:cli schema:drop && npm run migration:run && npm run seed:run"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
-    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
-    "@nestjs/sequelize": "^9.0.0",
-    "express-session": "^1.17.3",
-    "mariadb": "^3.0.2",
+    "@nestjs/swagger": "^6.1.3",
+    "@nestjs/typeorm": "^9.0.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
+    "config": "^3.3.8",
+    "mysql2": "^2.3.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "sequelize": "^6.25.3",
-    "sequelize-typescript": "^2.1.5"
+    "typeorm": "^0.3.10"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
-    "@nestjs/microservices": "^9.1.6",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@types/express": "^4.17.13",
-    "@types/express-session": "^1.17.5",
     "@types/jest": "28.1.8",
     "@types/node": "^16.0.0",
-    "@types/sequelize": "^4.28.14",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -67,7 +74,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -75,7 +82,10 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/./apps/"
+    ]
   }
 }

@@ -1,5 +1,76 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "apps/sist/src",
+  "monorepo": true,
+  "root": "apps/sist",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/sist/tsconfig.app.json"
+  },
+  "projects": {
+    "sist": {
+      "type": "application",
+      "root": "apps/sist",
+      "entryFile": "main",
+      "sourceRoot": "apps/sist/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/sist/tsconfig.app.json"
+      }
+    },
+    "person": {
+      "type": "application",
+      "root": "apps/person",
+      "entryFile": "main",
+      "sourceRoot": "apps/person/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/person/tsconfig.app.json"
+      }
+    },
+    "inventory-service-payment-report": {
+      "type": "application",
+      "root": "apps/inventory-service-payment-report",
+      "entryFile": "main",
+      "sourceRoot": "apps/inventory-service-payment-report/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/inventory-service-payment-report/tsconfig.app.json"
+      }
+    },
+    "inventory": {
+      "type": "application",
+      "root": "apps/inventory",
+      "entryFile": "main",
+      "sourceRoot": "apps/inventory/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/inventory/tsconfig.app.json"
+      }
+    },
+    "service": {
+      "type": "application",
+      "root": "apps/service",
+      "entryFile": "main",
+      "sourceRoot": "apps/service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/service/tsconfig.app.json"
+      }
+    },
+    "payment": {
+      "type": "application",
+      "root": "apps/payment",
+      "entryFile": "main",
+      "sourceRoot": "apps/payment/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/payment/tsconfig.app.json"
+      }
+    },
+    "report": {
+      "type": "application",
+      "root": "apps/report",
+      "entryFile": "main",
+      "sourceRoot": "apps/report/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/report/tsconfig.app.json"
+      }
+    }
+  }
 }
