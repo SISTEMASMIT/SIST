@@ -15,11 +15,12 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       username: process.env.USER,
       database: process.env.DATABASE,
       password: process.env.PASSWORD,
-      entities: [__dirname + '/src/**/entities/*.entity.{js,ts}'],
+      entities: [`${__dirname}/src/**/entities/**.entity.{ts,js}`],
       migrations: [__dirname + '/src/database/migrations/*{.ts,.js}'],
       extra: {
         charset: 'utf8mb4_unicode_ci',
       },
+      connectorPackage:"mysql2",
       synchronize: true,
       logging: true,
     };
@@ -33,7 +34,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: process.env.USER,
   database: process.env.DATABASE,
   password: process.env.PASSWORD,
-  entities: [__dirname + '/src/**/*.entity.{js,ts}'],
+  entities: [__dirname + '/src/**/entitites/*.entity.{js,ts}'],
       migrations: [__dirname + '/src/database/migrations/*{.ts,.js}'],
   extra: {
     charset: 'utf8mb4_unicode_ci',
