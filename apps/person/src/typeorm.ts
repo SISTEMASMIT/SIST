@@ -12,7 +12,7 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       type: 'mariadb',
       host: process.env.HOST,
       port: parseInt(process.env.PORT, 10),
-      username: process.env.USER,
+      username: process.env.USERDATABASE,
       database: process.env.DATABASE,
       password: process.env.PASSWORD,
       entities: [__dirname +'/src/**/entities/*.entity.{ts,js}'],
